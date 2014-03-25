@@ -4,6 +4,8 @@ App = Ember.Application.create();
 
 App.Mailbox = Em.Object.extend();
 
+//Ember.TEMPLATES['index'] = Ember.Handlebars.compile();	 
+
 App.Mailbox.reopenClass({
   find: function(id) {
     if (id) {
