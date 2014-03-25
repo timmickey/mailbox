@@ -1,5 +1,7 @@
 // Model
 
+App = Ember.Application.create();
+
 App.Mailbox = Em.Object.extend();
 
 App.Mailbox.reopenClass({
