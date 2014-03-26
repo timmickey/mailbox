@@ -88,14 +88,14 @@
 								</div>
 							</div>
 						{{else}}
-							<div {{bind-attr class=":todo isCompleted:completed isEditing:editing isSelected:selected"}} {{action "selectTodo" on="click"}}>
+							{{#view Todos.TodoView}}
+								{{input type="checkbox" class="toggle" checked=isCompleted}}
 								{{#if isEditing}}
 									{{edit-todo class="edit" value=bufferedTitle focus-out="doneEditing" insert-newline="doneEditing" escape-press="cancelEditing"}}
 								{{else}}
-									{{input type="checkbox" class="toggle" checked=isCompleted}}
 									{{title}}
 								{{/if}}
-							</div>
+							{{/view}}
 						{{/if}}
 					{{/each}}
 				</div>
@@ -132,6 +132,7 @@
 	<script src="js/controllers/todos_controller.js"></script>
 	<script src="js/controllers/todo_controller.js"></script>
 	<script src="js/views/edit_todo_view.js"></script>
+	<script src="js/views/todo_view.js"></script>
 
 	</body>
 
