@@ -2,7 +2,6 @@
 'use strict';
 
 Todos.TodoView = Ember.View.extend({
-	// templateName: 'Todos.TodoView',
 	classNames: ['todo', 'isSelected:selected'],
 	click: function(evt){
 		$('.todo').removeClass('selected');
