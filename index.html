@@ -10,112 +10,116 @@
 	
 	<body>
 	
+		<script type="text/x-handlebars">
+		{{outlet}}
+		</script>
+
 	<script type="text/x-handlebars" data-template-name="todos">
 
-	<div class="app">
-	  
-		<div class="top-bar nav">
+		<div class='app'>
+		  
+			<div class="top-bar nav">
 
-			<ul class="nav navbar-nav navbar-room">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_room_name}} <i class='fa fa-chevron-down'></i></a>
-					<ul class="dropdown-menu" id="room-container">
-						<li>Loading Rooms...</li>
-					</ul>
-				</li>
-			</ul>
+				<ul class="nav navbar-nav navbar-room">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{current_room_name}} <i class='fa fa-chevron-down'></i></a>
+						<ul class="dropdown-menu" id="room-container">
+							<li>Loading Rooms...</li>
+						</ul>
+					</li>
+				</ul>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user_full_name}} <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="/account">My Account</a></li>
-						<li><a href="/help">Help</a></li>
-						<li class="divider"></li>
-						<li><a href="/logout">Logout</a></li>
-					</ul>
-				</li>
-			</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user_full_name}} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/account">My Account</a></li>
+							<li><a href="/help">Help</a></li>
+							<li class="divider"></li>
+							<li><a href="/logout">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
 
-		</div>
+			</div>
 
-		<div id="bottom" class="bottom-bar">
+			<div id="bottom" class="bottom-bar">
 
-		  <div id="bottom-chat">
-		    <div id="chat-input">
-		      <form id="chat-input-form">
-		        <input id="chat-input-field" class="form-control" type="text" placeholder="Say something..." />
-		      </form>
-		    </div>
-		  </div>
+			  <div id="bottom-chat">
+			    <div id="chat-input">
+			      <form id="chat-input-form">
+			        <input id="chat-input-field" class="form-control" type="text" placeholder="Say something..." />
+			      </form>
+			    </div>
+			  </div>
 
-		  <div id="bottom-todos">
-		    <div class="add-btn pull-right">
-		      <a href="#" onclick="todos.create_new();"><i class="fa fa-plus"></i></a>
-		    </div>
-		    <ul class="nav nav-pills">
-		      <li class="active"><a href="#">Everyone</a></li>
-		      <li><a href="#">Me</a></li>
-		    </ul>
-		  </div>
+			  <div id="bottom-todos">
+			    <div class="add-btn pull-right">
+			      <a href="#" onclick="todos.create_new();"><i class="fa fa-plus"></i></a>
+			    </div>
+			    <ul class="nav nav-pills">
+			      <li class="active"><a href="#">Everyone</a></li>
+			      <li><a href="#">Me</a></li>
+			    </ul>
+			  </div>
 
-		</div>
+			</div>
 
-		<div id="column-border"></div>
+			<div id="column-border"></div>
 
-		<div id="chat">
-		  <div class='inner' id='chat-container'></div>
-		</div>
+			<div id="chat">
+			  <div class='inner' id='chat-container'></div>
+			</div>
 
-		<div id="todos">
+			<div id="todos">
 
-			<div class="inner">
+				<div class="inner">
 
-				<header id="header">
-					{{input id="new-todo" type="text" value=newTitle action="createTodo" placeholder="What needs to be done?"}}
-				</header>
+					<header id="header">
+						{{input id="new-todo" type="text" value=newTitle action="createTodo" placeholder="What needs to be done?"}}
+					</header>
 
-				<div id="todo-list">
-					{{#each filteredTodos itemController="todo"}}
-						{{#if isHeader}}
-							<div class="todo">
-								<div {{bind-attr class="isCompleted:completed isEditing:editing"}}>
+					<div id="todo-list">
+						{{#each filteredTodos itemController="todo"}}
+							{{#if isHeader}}
+								<div class="todo">
+									<div {{bind-attr class="isCompleted:completed isEditing:editing"}}>
+										{{#if isEditing}}
+											<input type='text' value='{{title}}' />
+										{{else}}
+											{{title}}
+										{{/if}}
+									</div>
+								</div>
+							{{else}}
+								{{#view Todos.TodoView}}
+									{{input type="checkbox" class="toggle" checked=isCompleted}}
 									{{#if isEditing}}
-										<input type='text' value='{{title}}' />
+										{{edit-todo class="edit" value=bufferedTitle focus-out="doneEditing" insert-newline="doneEditing" escape-press="cancelEditing"}}
 									{{else}}
 										{{title}}
 									{{/if}}
-								</div>
-							</div>
-						{{else}}
-							{{#view Todos.TodoView}}
-								{{input type="checkbox" class="toggle" checked=isCompleted}}
-								{{#if isEditing}}
-									{{edit-todo class="edit" value=bufferedTitle focus-out="doneEditing" insert-newline="doneEditing" escape-press="cancelEditing"}}
-								{{else}}
-									{{title}}
-								{{/if}}
-							{{/view}}
-						{{/if}}
-					{{/each}}
-				</div>
+								{{/view}}
+							{{/if}}
+						{{/each}}
+					</div>
 
-				<footer id="footer">
-					<ul id="filters">
-						<li>
-							{{#link-to "todos" activeClass="selected"}}Active{{/link-to}}
-						</li>
-						<li>
-							{{#link-to "todos.completed" activeClass="selected"}}Completed{{/link-to}}
-						</li>
-					</ul>
-				</footer>
+					<footer id="footer">
+						<ul id="filters">
+							<li>
+								{{#link-to "todos" activeClass="selected"}}Active{{/link-to}}
+							</li>
+							<li>
+								{{#link-to "todos.completed" activeClass="selected"}}Completed{{/link-to}}
+							</li>
+						</ul>
+					</footer>
+
+				</div>
 
 			</div>
 
 		</div>
-
-	</div>
 
 	</script>
 
@@ -125,12 +129,18 @@
 	<script src="js/lib/bootstrap.js"></script>
 	<script src="js/lib/ember.js"></script>
 	<script src="js/lib/ember-data.js"></script>
+
 	<script src="dist/emberfire.js"></script>
+
 	<script src="js/app.js"></script>
 	<script src="js/router.js"></script>
+
 	<script src="js/models/todo.js"></script>
+
 	<script src="js/controllers/todos_controller.js"></script>
 	<script src="js/controllers/todo_controller.js"></script>
+
+	<script src="js/views/application_view.js"></script>
 	<script src="js/views/edit_todo_view.js"></script>
 	<script src="js/views/todo_view.js"></script>
 
