@@ -2,14 +2,13 @@
 <html lang="en" data-framework="emberjs">
 	<head>
 		<meta charset="utf-8">
-		<title>ember.js • TodoMVC</title>
+		<title>kicktodo</title>
 		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
 		<script type="text/x-handlebars" data-template-name="todos">
 			<section id="todoapp">
 				<header id="header">
-					<h1>todos</h1>
 					{{input id="new-todo" type="text" value=newTitle action="createTodo" placeholder="What needs to be done?"}}
 				</header>
 				{{#if length}}
@@ -33,10 +32,7 @@
 						<span id="todo-count">{{{remainingFormatted}}}</span>
 						<ul id="filters">
 							<li>
-								{{#link-to "todos.index" activeClass="selected"}}All{{/link-to}}
-							</li>
-							<li>
-								{{#link-to "todos.active" activeClass="selected"}}Active{{/link-to}}
+								{{#link-to "todos" activeClass="selected"}}Active{{/link-to}}
 							</li>
 							<li>
 								{{#link-to "todos.completed" activeClass="selected"}}Completed{{/link-to}}
