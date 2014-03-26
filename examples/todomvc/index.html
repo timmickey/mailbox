@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>ember.js • TodoMVC</title>
-		<link rel="stylesheet" href="http://todomvc.com/architecture-examples/emberjs/bower_components/todomvc-common/base.css">
+		<link rel="stylesheet" href="css/styles.css">
 	</head>
 	<body>
 		<script type="text/x-handlebars" data-template-name="todos">
@@ -16,7 +16,7 @@
 					<section id="main">
 						<ul id="todo-list">
 							{{#each filteredTodos itemController="todo"}}
-								<li {{bind-attr class="isCompleted:completed isEditing:editing"}}>
+								<li {{bind-attr class="isCompleted:completed isEditing:editing isRemoved:removed"}}>
 									{{#if isEditing}}
 										{{edit-todo class="edit" value=bufferedTitle focus-out="doneEditing" insert-newline="doneEditing" escape-press="cancelEditing"}}
 									{{else}}

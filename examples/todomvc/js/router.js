@@ -16,14 +16,17 @@ Todos.TodosRoute = Ember.Route.extend({
 
 Todos.TodosIndexRoute = Ember.Route.extend({
 	setupController: function () {
-		this.controllerFor('todos').set('filteredTodos', this.modelFor('todos'));
+		var todos = this.store.filter('todo', function (todo) {
+			return !todo.get('isRemoved');
+		});
+		this.controllerFor('todos').set('filteredTodos', todos);
 	}
 });
 
 Todos.TodosActiveRoute = Ember.Route.extend({
 	setupController: function () {
 		var todos = this.store.filter('todo', function (todo) {
-			return !todo.get('isCompleted');
+			return !todo.get('isCompleted') && !todo.get('isRemoved');
 		});
 		this.controllerFor('todos').set('filteredTodos', todos);
 	}
@@ -32,7 +35,7 @@ Todos.TodosActiveRoute = Ember.Route.extend({
 Todos.TodosCompletedRoute = Ember.Route.extend({
 	setupController: function () {
 		var todos = this.store.filter('todo', function (todo) {
-			return todo.get('isCompleted');
+			return todo.get('isCompleted') && !todo.get('isRemoved');
 		});
 		this.controllerFor('todos').set('filteredTodos', todos);
 	}
