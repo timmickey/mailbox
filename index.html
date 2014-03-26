@@ -78,9 +78,24 @@
 				<div id="todo-list">
 					{{#each filteredTodos itemController="todo"}}
 						{{#if isHeader}}
-							{{todo-header isEditing=isEditing}}
+							<div class="todo">
+								<div {{bind-attr class="isCompleted:completed isEditing:editing"}}>
+									{{#if isEditing}}
+										<input type='text' value='{{title}}' />
+									{{else}}
+										{{title}}
+									{{/if}}
+								</div>
+							</div>
 						{{else}}
-							{{todo-item title=title isCompleted=isCompleted isEditing=isEditing}}
+							<div {{bind-attr class=":todo isCompleted:completed isEditing:editing isSelected:selected"}} {{action "selectTodo" on="click"}}>
+								{{#if isEditing}}
+									{{edit-todo class="edit" value=bufferedTitle focus-out="doneEditing" insert-newline="doneEditing" escape-press="cancelEditing"}}
+								{{else}}
+									{{input type="checkbox" class="toggle" checked=isCompleted}}
+									{{title}}
+								{{/if}}
+							</div>
 						{{/if}}
 					{{/each}}
 				</div>
@@ -102,31 +117,6 @@
 
 	</div>
 
-	</script>
-
-	<script type="text/x-handlebars" data-template-name="components/todo-header">
-		<div class="todo">
-			<div {{bind-attr class="isCompleted:completed isEditing:editing"}}>
-				{{#if isEditing}}
-					<input type='text' value='{{title}}' />
-				{{else}}
-					{{title}}
-				{{/if}}
-			</div>
-		</div>
-	</script>
-
-	<script type="text/x-handlebars" data-template-name="components/todo-item">
-		<div class="todo">
-			<div {{bind-attr class="isCompleted:completed isEditing:editing"}}>
-				{{#if isEditing}}
-					{{edit-todo class="edit" value=bufferedTitle focus-out="doneEditing" insert-newline="doneEditing" escape-press="cancelEditing"}}
-				{{else}}
-					{{input type="checkbox" class="toggle" checked=isCompleted}}
-					<label {{action "editTodo" on="doubleClick"}}>{{title}}</label>
-				{{/if}}
-			</div>
-		</div>
 	</script>
 
 	<script src="js/lib/firebase.js"></script>

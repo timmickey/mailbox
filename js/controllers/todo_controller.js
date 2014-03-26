@@ -14,6 +14,12 @@ Todos.TodoController = Ember.ObjectController.extend({
 		editTodo: function () {
 			this.set('isEditing', true);
 		},
+		selectTodo: function(){
+			this.set('isSelected', true);
+		},
+		doneSelecting: function(){
+			this.set('isEditing', false);
+		},
 		doneEditing: function () {
 			var bufferedTitle = this.get('bufferedTitle').trim();
 			if (Ember.isEmpty(bufferedTitle)) {
